@@ -19,3 +19,17 @@ def createMatrix(rows, columns):
         matrix.append(column)
     return(matrix)
 
+#Función de adaptacion
+
+def costoFila(arr):
+    costo=0
+    primera=0
+    ultima= arr.size -1
+    
+    for valor in range(arr):
+        costo= costo + valor
+       
+    valorTotal= costo+ arr[primera][ultima]
+    
+    return(valorTotal)
+
