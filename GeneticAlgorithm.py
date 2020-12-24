@@ -9,9 +9,36 @@
 import math
 import random
 
+# Genera una población al azar
+def generatePopulation(nInd, longGenoma):
+    population = []
+    for i in range(nInd):
+        item = []
+        for j in range(longGenoma):
+            item.append(j+1)
+        random.shuffle(item)
+        population.append(item)
+    return(population)
+
+# Intercambia las posiciones de un arreglo
+def swap(array, x, y):
+    temp = array[x] 
+    array[x] = array[y]
+    array[y] = temp
+
+# Proceso de mutación por intercambio
+def mutation(array):
+    x = 0
+    y = 0
+    while x == y:
+        x = random.randrange(len(array))
+        y = random.randrange(len(array))
+    swap(array,x,y)
+    return array
+
+# Crea la matriz con los pesos
 def createMatrix(rows, columns):
     matrix = []
-    poblacion = []
     for i in range(rows):
         column = []
         for j in range(columns):
