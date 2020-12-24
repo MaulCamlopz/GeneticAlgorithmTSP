@@ -42,3 +42,23 @@ def costoFila(arr, rows, columns):
         fila.append(costo+arr[0][columns-1])
         
     return fila
+
+
+def funcionSeleccion(arr,fila, rows):
+    
+    i=0
+    sel= []
+    pos=0
+    menor= fila[0]
+    
+    for i in range(rows-1):
+        if menor > fila[i]:
+            menor= fila[i]
+        i+=1
+    for i in range(rows-1):
+        if menor == fila[i]:
+           sel.append(arr[i])
+        i+=1
+    
+    
+    return(sel)
