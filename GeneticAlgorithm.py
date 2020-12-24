@@ -15,21 +15,30 @@ def createMatrix(rows, columns):
     for i in range(rows):
         column = []
         for j in range(columns):
-            column.append(random.randint(10, 50))
+            #Se modifico esta parte para que cuando sean entre ellos mismos sean cero ya que no hay
+            # una arista entre si misma
+            if i != j:
+                column.append(random.randint(10, 50))
+            else:
+                column.append(0)
         matrix.append(column)
     return(matrix)
 
 #Función de adaptacion
-
-def costoFila(arr):
-    costo=0
-    primera=0
-    ultima= arr.size -1
+#se corrigio la función ya esta probada y funciona
+def costoFila(arr, rows, columns):
+    costo= 0
+    fila= []
+    i=0
+    j=0
     
-    for valor in range(arr):
-        costo= costo + valor
-       
-    valorTotal= costo+ arr[primera][ultima]
-    
-    return(valorTotal)
-
+    for i in range(rows-1):
+        costo= 0
+        for j in range(columns-1):
+            costo= costo + arr[i][j]
+            j+=1
+            print(costo)
+        i+=1
+        fila.append(costo+arr[0][columns-1])
+        
+    return fila
