@@ -53,38 +53,40 @@ def createMatrix(rows, columns):
 
 #Función de adaptacion
 #se corrigio la función ya esta probada y funciona
-def costoFila(arr, rows, columns):
+def costRow(matrix, Nind, columns, pob):
     costo= 0
-    fila= []
+    list= []
     i=0
     j=0
     
-    for i in range(rows-1):
+    for i in range(Nind):
         costo= 0
         for j in range(columns-1):
-            costo= costo + arr[i][j]
+            x= pob[i][j]
+            y= pob[i][j+1]
+            costo= costo + matrix[x-1][y-1]
             j+=1
-            print(costo)
+        primero= pob[i][0]
+        ultimo= pob[i][columns-1]
         i+=1
-        fila.append(costo+arr[0][columns-1])
+        list.append(costo+matrix[ultimo-1][primero-1])
         
-    return fila
+    return list
 
-def funcionSeleccion(arr,fila, rows):
+
+def selectionFunction(pob,list, Nindi):
     
     i=0
-    sel= []
     pos=0
-    menor= fila[0]
+    menor= list[0]
     
-    for i in range(rows-1):
-        if menor > fila[i]:
-            menor= fila[i]
+    for i in range(Nindi):
+        if menor > list[i]:
+            menor= list[i]
         i+=1
-    for i in range(rows-1):
-        if menor == fila[i]:
-           sel.append(arr[i])
+    for i in range(Nindi):
+        if menor == list[i]:
+           break
         i+=1
     
-    
-    return(sel)
+    return pob[i]
