@@ -117,7 +117,7 @@ def selection(pob, weights, numInd, selOp):
     return sel
 
 def crossover(sel, sel1, city):
-    
+    # city genera un error cuando es un numero impar
     i=0
     pos1= random.randint(0, city/2)
     #Se imprime solo para comprobar el valor
@@ -190,6 +190,11 @@ def main(numInd, genLength, numGenerations):
             print(selectedPob)
             newPopulation = newPopulation + selectedPob
             selectedPob = []
+        print("Nueva población:", i,"\n")
+        print(newPopulation)
+        population = []
+        population = newPopulation
+        newPopulation = []
     
     evaluation = populationEvaluation(weights, numInd, genLength, population)
     print("Evaluación final de la pob: ")
