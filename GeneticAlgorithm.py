@@ -116,19 +116,41 @@ def selection(pob, weights, numInd, selOp):
     
     return sel
 
-def crossover(sel, sel1, city):
-    # city genera un error cuando es un numero impar
+#City es el número de ciudades
+def corsses(sel, sel1, city):
+    
     i=0
-    pos1= random.randint(0, city/2)
-    #Se imprime solo para comprobar el valor
-    print(pos1)
-    pos2= random.randint(city/2, city-1)
-    print(pos2)
-    if pos1 == pos2:
-        pos1= random.randint(0, (city/2 - 1))
+    temp=0
+    #Se comprueba si el valor de city es impar o par
+    if city % 2 == 0:
+        pos1= random.randint(0, city)
+        #Se imprime solo para comprobar el valor
         print(pos1)
-        pos2= random.randint(city/2 + 1, city-1)
+        pos2= random.randint(0, city)
         print(pos2)
+        while pos1 == pos2:
+            pos1= random.randint(0, city)
+            print(pos1)
+            pos2= random.randint(0, city)
+            print(pos2)
+            
+    else :
+        pos1= random.randint(0, city-1)
+        #Se imprime solo para comprobar el valor
+        print(pos1)
+        pos2= random.randint(0, city-1)
+        print(pos2)
+        while pos1 == pos2:
+            pos1= random.randint(0, city-1)
+            print(pos1)
+            pos2= random.randint(0, city-1)
+            print(pos2)
+    
+    #Para evitar que pos1 sea mayor a pos2
+    if pos1 > pos2:
+        temp= pos1
+        pos1=pos2
+        pos2= temp
     
     c1= sel[pos1+1:pos2]
     c2= sel1[pos1+1:pos2]
@@ -140,9 +162,8 @@ def crossover(sel, sel1, city):
     l= pos2-pos1
     m=0
     for j in range(l-1):
-        print(pos1)
-        sel[pos1]=c2[m]
-        sel1[pos1]=c1[m]
+        sel[pos1+1]=c2[m]
+        sel1[pos1+1]=c1[m]
         pos1+=1
         m+=1
         j+=1
@@ -181,7 +202,7 @@ def main(numInd, genLength, numGenerations):
             selectedPob.append(selection(population, weights, numInd, selOp))
             print("Individuos seleccionados: ")
             print(selectedPob)
-            selectedPob = crossover(selectedPob[0], selectedPob[1], genLength)
+            selectedPob = corsses(selectedPob[0], selectedPob[1], genLength)
             print("Cruza: ")
             print(selectedPob)
             mutation(selectedPob[0])
