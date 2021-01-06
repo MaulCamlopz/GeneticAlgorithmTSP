@@ -184,6 +184,7 @@ def main(numInd, genLength, numGenerations):
     newPopulation = [] 
     selectedPob = [] # Individuos seleccionados
     selOp = 0 # Se toma el primer valor como el menor
+    selOp1 = 1 #Se toma el valor del mayor
     weights = createWeights(genLength)
     population = generatePopulation(numInd, genLength)
     print("Población original")
@@ -199,7 +200,7 @@ def main(numInd, genLength, numGenerations):
         
         while len(newPopulation) < numInd:
             selectedPob.append(selection(population, weights, numInd, selOp))
-            selectedPob.append(selection(population, weights, numInd, selOp))
+            selectedPob.append(selection(population, weights, numInd, selOp1))
             print("Individuos seleccionados: ")
             print(selectedPob)
             selectedPob = corsses(selectedPob[0], selectedPob[1], genLength)
