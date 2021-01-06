@@ -124,27 +124,17 @@ def corsses(sel, sel1, city):
     #Se comprueba si el valor de city es impar o par
     if city % 2 == 0:
         pos1= random.randint(0, city)
-        #Se imprime solo para comprobar el valor
-        print(pos1)
         pos2= random.randint(0, city)
-        print(pos2)
         while pos1 == pos2:
             pos1= random.randint(0, city)
-            print(pos1)
             pos2= random.randint(0, city)
-            print(pos2)
             
     else :
         pos1= random.randint(0, city-1)
-        #Se imprime solo para comprobar el valor
-        print(pos1)
         pos2= random.randint(0, city-1)
-        print(pos2)
         while pos1 == pos2:
             pos1= random.randint(0, city-1)
-            print(pos1)
             pos2= random.randint(0, city-1)
-            print(pos2)
     
     #Para evitar que pos1 sea mayor a pos2
     if pos1 > pos2:
@@ -154,9 +144,6 @@ def corsses(sel, sel1, city):
     
     c1= sel[pos1+1:pos2]
     c2= sel1[pos1+1:pos2]
-    #comprobar que numeros se van a copiar
-    print(c1)
-    print(c2)
     
     j= pos1
     l= pos2-pos1
@@ -183,8 +170,8 @@ def main(numInd, genLength, numGenerations):
     population = []
     newPopulation = [] 
     selectedPob = [] # Individuos seleccionados
-    selOp = 0 # Se toma el primer valor como el menor
-    selOp1 = 1 #Se toma el valor del mayor
+    selMin = 0 # Se utiliza para que nos de el individuo con menos peso
+    selMax = 1 #Se utiliza para que nos de el individuo con mayor peso
     weights = createWeights(genLength)
     population = generatePopulation(numInd, genLength)
     print("Población original")
@@ -199,8 +186,8 @@ def main(numInd, genLength, numGenerations):
         print("---------------------")
         
         while len(newPopulation) < numInd:
-            selectedPob.append(selection(population, weights, numInd, selOp))
-            selectedPob.append(selection(population, weights, numInd, selOp1))
+            selectedPob.append(selection(population, weights, numInd, selMin))
+            selectedPob.append(selection(population, weights, numInd, selMax))
             print("Individuos seleccionados: ")
             print(selectedPob)
             selectedPob = corsses(selectedPob[0], selectedPob[1], genLength)
