@@ -10,14 +10,10 @@ import math
 import random
 
 # Genera una población de individuos aleatoriamente
-def generatePopulation(numInd, Genlength):
+def generatePopulation():
     population = []
-    for i in range(numInd):
-        item = []
-        for j in range(Genlength):
-            item.append(j+1)
-        random.shuffle(item)
-        population.append(item)
+    population = [[1,2,3,4], [1,2,4,3], [1,3,2,4]]
+    
     return(population)
 
 # Intercambia dos posiciones de una lista
@@ -37,16 +33,10 @@ def mutation(selectedInd):
     return selectedInd
 
 # Crea una "matriz" con los pesos (distancias) entre cada vértice (ciudad)
-def createWeights(numInd):
+def createWeights():
     weights = []
-    for i in range(numInd):
-        values = [] # lista de valores por cada individuo
-        for j in range(numInd):
-            if i != j:
-                values.append(random.randint(1, 100))
-            else:
-                values.append(0) # El peso es cero cuando nos referimos a la misma ciudad
-        weights.append(values)
+    weights = [[0, 7, 9, 8], [7, 0, 10, 4], [9, 10, 0, 15], [8, 4, 15, 0]]
+    
     return(weights)
 
 #Función de adaptación / evaluación
@@ -159,8 +149,8 @@ def corsses(sel, sel1, city):
 
 """
 Función principal del AG
-    • numInd: Número de individuos de la población.
-    • genLength: longitud del Genoma.
+    • numInd: Número de individuos de la población, en este ejemplo será de 3.
+    • genLength: longitud del Genoma, tiene una longitud de 4.
     • numGenerations: número de Generaciones.
 """
 def main(numInd, genLength, numGenerations):
@@ -172,8 +162,8 @@ def main(numInd, genLength, numGenerations):
     selectedPob = [] # Individuos seleccionados
     selMin = 0 # Se utiliza para que nos de el individuo con menos peso
     selMax = 1 #Se utiliza para que nos de el individuo con mayor peso
-    weights = createWeights(genLength)
-    population = generatePopulation(numInd, genLength)
+    weights = createWeights()
+    population = generatePopulation()
     print("Población original")
     print(population)
     
