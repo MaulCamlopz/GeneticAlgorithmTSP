@@ -111,6 +111,7 @@ def selection(weights, numInd, genLength, pob):
 def corsses(sel, sel1, city):
     
     i=0
+    j=0
     temp=0
     #Se comprueba si el valor de city es impar o par
     if city % 2 == 0:
@@ -136,18 +137,31 @@ def corsses(sel, sel1, city):
     c1= sel[pos1+1:pos2]
     c2= sel1[pos1+1:pos2]
     
-    j= pos1
-    l= pos2-pos1
-    m=0
-    for j in range(l-1):
-        sel[pos1+1]=c2[m]
-        sel1[pos1+1]=c1[m]
-        pos1+=1
-        m+=1
+    tam= len(sel1)
+    tam1= len(sel)
+    copy=1
+    
+    for j in range(len(c1)):
+        for i in range(tam):
+            if c1[j] == sel1[i]:
+                copy=0
+        i+=1
+        if copy == 1:
+            sel1[pos+1]= c1[j]
+            pos1+=1
+        j+=1
+    
+    for j in range(len(c2)):
+        for i in range(tam1):
+            if c2[j] == sel[i]:
+                copy=0
+            i+=1
+        if copy == 1:
+            sel1[pos1+1]= c2[j]
+            pos1+=1
         j+=1
     
     return[sel, sel1]
-
 """
 Función principal del AG
     • numInd: Número de individuos de la población, en este ejemplo será de 3.
