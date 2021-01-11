@@ -19,7 +19,7 @@ def generatePopulation(numInd, genLength):
             item.append(j+1)
         random.shuffle(item)
         population.append(item)
-    return(population)
+    return population
 
 # Intercambia dos posiciones de una lista
 def swap(list, x, y):
@@ -28,47 +28,39 @@ def swap(list, x, y):
     list[y] = temp
 
 # Proceso de mutación por intercambio para un individuo seleccionado
-def mutation(selectedPob, pM):
-    i= 0
+def mutation(sel, pM):
     q = 0.0
-    while i < 2:
-        q = random.random()
-        if q < pM:
-            x = 0
-            y = 0
-            print("\nMutación\n")
-            print(selectedPob[i])
-            while x == y:
-                x = random.randrange(len(selectedPob[i]))
-                y = random.randrange(len(selectedPob[i]))
-            swap(selectedPob[i],x,y)
-            print(selectedPob[i])
-            print("\n")   
-        i+=1
-
+    q = random.random()
+    if q < pM:
+        x = 0
+        y = 0
+        print("mutation")
+        print(sel)
+        while x == y:
+            x = random.randrange(len(sel))
+            y = random.randrange(len(sel))
+        swap(sel,x,y)
+        print(sel)
+    return
 
 # Crea una "matriz" con los pesos (distancias) entre cada vértice (ciudad)
 def createWeights():
-    weights = []
     weights = [[0, 7, 9, 8], [7, 0, 10, 4], [9, 10, 0, 15], [8, 4, 15, 0]]
-    return(weights)
+    return weights
 
 #Función de adaptación / evaluación
 def populationEvaluation(weights, numInd, genLength, pob):
-    costo= 0
-    list= []
-    
+    list = []
     for i in range(numInd):
-        costo= 0
+        costo = 0
         for j in range(genLength-1):
-            x= pob[i][j]
-            y= pob[i][j+1]
-            costo= costo + weights[x-1][y-1]
-            j+=1
-        primero= pob[i][0]
-        ultimo= pob[i][genLength-1]
-        i+=1
-        list.append(costo+weights[ultimo-1][primero-1])
+            x = pob[i][j]
+            y = pob[i][j+1]
+            costo = costo + weights[x-1][y-1]
+        primero = pob[i][0]
+        ultimo = pob[i][genLength-1]
+        costo = costo + weights[ultimo-1][primero-1]
+        list.append(costo)
         
     return list
 
@@ -161,10 +153,11 @@ def corsses(sel, sel1, city):
             pos1+=1
         j+=1
     
-    return[sel, sel1]
+    return [sel, sel1]
+
 """
 Función principal del AG
-    • numInd: Número de individuos de la población, en este ejemplo será de 3.
+    • numInd: Número de individuos de la población, en este ejemplo será igual o mayor a 3.
     • GENOME_LENGTH: longitud del Genoma, tiene una longitud de 4.
     • numGenerations: número de Generaciones.
     • pM: probabilidad de mutación
@@ -173,18 +166,16 @@ def main(numInd, pM, numGenerations):
     S = 0.0
     GENOME_LENGTH = 4
     weights = []
-    evaluation = []
     population = []
-    newPopulation = [] 
-    selectedPob = [] # Individuos seleccionados
-    selMin = 0 # Se utiliza para que nos de el individuo con menos peso
-    selMax = 1 #Se utiliza para que nos de el individuo con mayor peso
+    evaluation = []
+    
     weights = createWeights()
     population = generatePopulation(numInd, GENOME_LENGTH)
     print("Población original")
     print(population)
     
     for i in range(numGenerations):
+        newPopulation = []
         evaluation = populationEvaluation(weights, numInd, GENOME_LENGTH, population)
         print("Evaluación de la pob: ")
         print(evaluation)
@@ -192,30 +183,36 @@ def main(numInd, pM, numGenerations):
         S = sumQualifications(evaluation)
         print("Calificación:",S," \n")
         print("---------------------")
-        
-        while len(newPopulation) < numInd:
 
-            selectedPob.append(selection(weights, numInd, GENOME_LENGTH, population));
-            selectedPob.append(selection(weights, numInd, GENOME_LENGTH, population));
+        while (len(newPopulation) < numInd):
+            print("init selectedPob")
+            print(population)
+            selectedPob = []
+
+            selectedPob.append(selection(weights, numInd, GENOME_LENGTH, population))
+            selectedPob.append(selection(weights, numInd, GENOME_LENGTH, population))
+
             print("Individuos seleccionados: ")
             print(selectedPob)
 
-            selectedPob = corsses(selectedPob[0], selectedPob[1], GENOME_LENGTH)
-            print("Cruza: ")
+
+            selectedPob = corsses(selectedPob.pop(), selectedPob.pop(), GENOME_LENGTH)
+            print("Cruza: ")    
             print(selectedPob)
-            
-            mutation(selectedPob, pM)
-            
-            print("selectedPob")
+
+            mutation(selectedPob[0], pM)
+            mutation(selectedPob[1], pM)
+
+            print("finalSelectedPob")
             print(selectedPob)
-            
+
             newPopulation = newPopulation + selectedPob
-            selectedPob = []
+            
+        
+        print("---------------------")
         print("Nueva población:", i,"\n")
         print(newPopulation)
-        population = []
         population = newPopulation
-        newPopulation = []
     
     evaluation = populationEvaluation(weights, numInd, GENOME_LENGTH, population)
     print("Evaluación final de la pob: ")
