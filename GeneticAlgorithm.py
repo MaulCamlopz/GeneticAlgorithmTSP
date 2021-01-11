@@ -104,6 +104,8 @@ def selection(weights, numInd, genLength, pob):
 #City es el número de ciudades
 def corsses(sel, sel1, city):
     
+    sl= copy.copy(sel)
+    sl1= copy.copy(sel1)
     i=0
     j=0
     temp=0
@@ -128,34 +130,36 @@ def corsses(sel, sel1, city):
         pos1=pos2
         pos2= temp
     
-    c1= sel[pos1+1:pos2]
-    c2= sel1[pos1+1:pos2]
+    c1= sl[pos1+1:pos2]
+    c2= sl1[pos1+1:pos2]
     
-    tam= len(sel1)
-    tam1= len(sel)
-    copy=1
+    tam= len(sl1)
+    tam1= len(sl)
+    cpy=1
+    ps=pos1 #para poder utilizarlo dentro del for
     
     for j in range(len(c1)):
         for i in range(tam):
-            if c1[j] == sel1[i]:
-                copy=0
-        i+=1
-        if copy == 1:
-            sel1[pos+1]= c1[j]
-            pos1+=1
+            if c1[j] == sl1[i]:
+                cpy=0
+            i+=1
+        if cpy == 1:
+            ps+=1
+            sel1[ps]= c1[j]
         j+=1
     
+    ps=pos1
     for j in range(len(c2)):
         for i in range(tam1):
-            if c2[j] == sel[i]:
-                copy=0
+            if c2[j] == sl[i]:
+                cpy=0
             i+=1
-        if copy == 1:
-            sel1[pos1+1]= c2[j]
-            pos1+=1
+        if cpy == 1:
+            ps+=1
+            sl1[ps]= c2[j]
         j+=1
     
-    return [sel, sel1]
+    return [sl, sl1]
 
 """
 Función principal del AG
