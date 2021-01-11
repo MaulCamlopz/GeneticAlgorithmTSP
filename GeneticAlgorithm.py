@@ -8,6 +8,7 @@
 #
 import math
 import random
+import copy
 
 # Genera una población de individuos aleatoriamente
 def generatePopulation(numInd, genLength):
@@ -29,19 +30,20 @@ def swap(list, x, y):
 
 # Proceso de mutación por intercambio para un individuo seleccionado
 def mutation(sel, pM):
+    l = copy.copy(sel)
     q = 0.0
     q = random.random()
     if q < pM:
         x = 0
         y = 0
         print("mutation")
-        print(sel)
+        print(l)
         while x == y:
-            x = random.randrange(len(sel))
-            y = random.randrange(len(sel))
-        swap(sel,x,y)
-        print(sel)
-    return
+            x = random.randrange(len(l))
+            y = random.randrange(len(l))
+        swap(l,x,y)
+        print(l)
+    return l
 
 # Crea una "matriz" con los pesos (distancias) entre cada vértice (ciudad)
 def createWeights():
@@ -200,8 +202,8 @@ def main(numInd, pM, numGenerations):
             print("Cruza: ")    
             print(selectedPob)
 
-            mutation(selectedPob[0], pM)
-            mutation(selectedPob[1], pM)
+            selectedPob.append(mutation(selectedPob.pop(), pM)) 
+            selectedPob.append(mutation(selectedPob.pop(), pM))
 
             print("finalSelectedPob")
             print(selectedPob)
